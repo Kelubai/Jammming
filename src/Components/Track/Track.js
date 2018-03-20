@@ -5,19 +5,30 @@ class Track extends React.Component {
   constructor(props) {
     super(props);
     this.addTrack.bind(this);
+    this.removeTrack.bind(this);
   }
 
-  renderAction() {
-    if (this.props.isRemoval) {
-      return <span onClick={this.removeTrack}>'-'</span>;
+  //Shows if track is either removable or to be added
+  isRemoval(track) {
+    if (track == this.props.playlistTracks.forEach()) {
+      return true;
     }
-    return <span onClick={this.addTrack}>'+'</span>;
   }
 
+  //display option of either adding or removing track
+  renderAction() {
+    if (this.isRemoval) {
+      return <span onClick={this.removeTrack}>"-"</span>;
+    }
+    return <span onClick={this.addTrack}>"+"</span>;
+  }
+
+  //handles addition of track
   addTrack(track) {
     this.props.onAdd(this.props.track);
   }
 
+  //handles removal of track
   removeTrack(track) {
     this.props.onRemove(this.props.track);
   }
@@ -29,7 +40,7 @@ class Track extends React.Component {
           <h3>{this.props.track.name}</h3>
           <p>{this.props.track.artist} | {this.props.track.album}</p>
         </div>
-        <a className="Track-action">{this.props.renderAction}</a>
+        <a className="Track-action">{this.renderAction}</a>
       </div>
     );
   }

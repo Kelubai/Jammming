@@ -49,12 +49,15 @@ class App extends React.Component {
     this.removeTrack.bind(this);
   }
 
+  //defines adding a track to playlist
   addTrack(track) {
     if (track.id != this.playlistTracks.forEach(track.id)) {
       this.playlistTracks.push(track);
     }
   }
 
+
+  //defines removing a track from playlist
   removeTrack(track) {
     this.playlistTracks.filter(existingTrack => existingTrack != track.id);
   }
