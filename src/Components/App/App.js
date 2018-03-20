@@ -9,42 +9,54 @@ class App extends React.Component {
     super(props);
     // Hard-coded search results
     this.state = {
-  searchResults: [
-    {
-      name: 'Fractured',
-      artist: 'RED',
-      album: 'Gone'
-    },
-    {
-      name: 'E for Extinction',
-      artist: 'Thousand Foot Krutch',
-      album: 'Welcome to the Masquerade'
-    },
-    {
-      name: 'Patience',
-      artist: 'Demon Hunter',
-      album: 'Outlive'
+      searchResults: [
+        {
+          name: 'Fractured',
+          artist: 'RED',
+          album: 'Gone'
+        },
+        {
+          name: 'E for Extinction',
+          artist: 'Thousand Foot Krutch',
+          album: 'Welcome to the Masquerade'
+        },
+        {
+          name: 'Patience',
+          artist: 'Demon Hunter',
+          album: 'Outlive'
+        }
+      ],
+      playlistName: 'Blood and Sweat',
+      playlistTracks: [
+        {
+          name: 'Fractured',
+          artist: 'RED',
+          album: 'Gone'
+        },
+        {
+          name: 'E for Extinction',
+          artist: 'Thousand Foot Krutch',
+          album: 'Welcome to the Masquerade'
+        },
+        {
+          name: 'Patience',
+          artist: 'Demon Hunter',
+          album: 'Outlive'
+        }
+      ]
+    };
+    this.addTrack.bind(this);
+    this.removeTrack.bind(this);
+  }
+
+  addTrack(track) {
+    if (track.id != this.playlistTracks.forEach(track.id)) {
+      this.playlistTracks.push(track);
     }
-  ],
-  playlistName: 'Blood and Sweat',
-  playlistTracks: [
-    {
-      name: 'Fractured',
-      artist: 'RED',
-      album: 'Gone'
-    },
-    {
-      name: 'E for Extinction',
-      artist: 'Thousand Foot Krutch',
-      album: 'Welcome to the Masquerade'
-    },
-    {
-      name: 'Patience',
-      artist: 'Demon Hunter',
-      album: 'Outlive'
-    }
-  ]
-};
+  }
+
+  removeTrack(track) {
+    this.playlistTracks.filter(existingTrack => existingTrack != track.id);
   }
 
   render() {
@@ -54,8 +66,8 @@ class App extends React.Component {
         <div className="App">
           <SearchBar />
           <div className="App-playlist">
-            <SearchResults searchResults={this.state.searchResults} />
-            <Playlist playlistTracks={this.state.playlistTracks} />
+            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack}/>
+            <Playlist playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack}/>
           </div>
         </div>
       </div>
