@@ -9,6 +9,7 @@ class Track extends React.Component {
   }
 
   //Shows if track is either removable or to be added
+    // WORK ON THIS PROPERTY / DISPLAY SUBTRACT SYMBOL *****
   isRemoval(track) {
     if (track == this.props.playlistTracks.forEach()) {
       return true;

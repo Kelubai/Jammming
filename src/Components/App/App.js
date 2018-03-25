@@ -65,6 +65,7 @@ class App extends React.Component {
     this.playlistTracks.filter(existingTrack => existingTrack != track.id);
   }
 
+  // updates Playlist Name
   updatePlaylistName(name) {
     this.state.playlistName = name;
   }
