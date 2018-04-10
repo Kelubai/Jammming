@@ -27,7 +27,7 @@ class App extends React.Component {
         return;
     }
     this.state.playlistTracks.push(track);
-    this.setState({playlistTracks: this.state.playlistTracks});
+    this.setState(this.state.playlistTracks);
   }
 
   //defines removing a track from playlist
@@ -44,21 +44,14 @@ class App extends React.Component {
 
   //gathers URI info for each track
   savePlaylist() {
-    let trackURIs = this.state.playlistTracks.map(track => track.uri);
-    Spotify.savePlaylist(
-      this.setState(this.state.playListName, trackURIs
-      ).then(() => {
-        this.setState({
-          playlistName: 'New Playlist',
-          playlistTracks: []
-        });
-      }),
-    )
+      let trackURIs = this.state.playlistTracks.map(track => track.uri);
+      Spotify.savePlaylist(this.state.playlistName, trackURIs);
+      this.setState({playlistName: 'New Playlist', playlistTracks: [] })
   }
 
   search(searchTerm) {
     Spotify.search(searchTerm).then(searchResults => {
-        this.setState({ searchResults: searchResults });
+        this.setState({searchResults: searchResults});
     });
   }
 
