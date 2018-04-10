@@ -4,16 +4,38 @@ const redirectURI = 'http://localhost:3000/';
 
 const Spotify = {
   getAccessToken() {
-    if (accessToken != '') {
+    if (accessToken) {
       return accessToken;
-    } else if (window.location.href.match() == /access_token=([^&]*)/,
-      /expires_in=([^&]*)/)) {
-      accessToken = /access_token=([^&]*)/;
-      expTime = /expires_in=([^&]*)/;
-      expires_in = "3600";
-      window.setTimeout(() => accessToken = '', expiresIn * 1000);
-      window.history.pushState('Access Token', null, '/');
     }
+    const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
+    const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
+    if (accessTokenMatchelse, expiresInMatch) {
+      accessToken = accessTokenMatch[0];
+      const expiresIn = "3600";
+      window.setTimeout(() => accessToken = '', expiresIn * 1000);
+
+      window.history.pushState('Access Token', null, '/');
+      // This clears the parameters, allowing us to grab a new access token when it expires
+      return accessToken;
+    } else {
+      window.location = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
+    }
+  }
+
+  search(searchTerm) {
+    return (
+      async function getData() {
+        try {
+          let response = await fetch('https://api.spotify.com/v1/search?type=track&q=TERM');
+          if (response.ok) {
+            let jsonResponse = await.response.json();
+          }
+          throw new Error('Request Failed!');
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    );
   }
 };
 
