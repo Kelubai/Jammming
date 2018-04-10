@@ -48,7 +48,7 @@ const Spotify = {
       return;
     }
     accessToken = Spotify.getAccessToken();
-    let headers = {'Authorization': 'Bearer ' + accessToken};
+    let headers = {Authorization: 'Bearer ' + accessToken};
     let userID = '';
     return fetch('https://api.spotify.com/v1/me', {headers: headers
       }).then(response => response.json()

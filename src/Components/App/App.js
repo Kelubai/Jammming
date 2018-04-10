@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
@@ -44,10 +44,14 @@ class App extends React.Component {
 
   //gathers URI info for each track
   savePlaylist() {
-      let trackURIs = this.state.playlistTracks.map(track => track.uri);
-      Spotify.savePlaylist(this.state.playlistName, trackURIs);
-      this.setState({playlistName: 'New Playlist', playlistTracks: [] })
-  }
+     const trackUris = this.state.playlistTracks.map(track => track.uri);
+     Spotify.savePlaylist(this.state.playlistName, trackUris).then(() => {
+       this.setState({
+         playlistName: 'New Playlist',
+         playlistTracks: []
+       });
+     });
+   }
 
   search(searchTerm) {
     Spotify.search(searchTerm).then(searchResults => {
