@@ -23,20 +23,17 @@ const Spotify = {
   }
 
   search(searchTerm) {
-    return (
-      async function getData() {
-        try {
-          let response = await fetch('https://api.spotify.com/v1/search?type=track&q=TERM');
-          if (response.ok) {
-            let jsonResponse = await.response.json();
-          }
-          throw new Error('Request Failed!');
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    );
-  }
+    accessToken = Spotify.getAccessToken();
+    return fetch('https://api.spotify.com/v1/search?type=track&q=TERM', {
+  headers: {Authorization: `Bearer ${accessToken}`}
+});
+    if (response.ok) {
+      let jsonResponse = await.response.json();
+    }
+      throw new Error('Request Failed!');
+    } catch (error) {
+      console.log(error);
+    }
 };
 
 export default Spotify;
