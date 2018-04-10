@@ -24,7 +24,7 @@ const Spotify = {
 
   search(searchTerm) {
     accessToken = Spotify.getAccessToken();
-    return fetch('https://api.spotify.com/v1/search?type=track&q=TERM', {
+    return fetch(`https://api.spotify.com/v1/search?type=track&q=${searchTerm}`, {
   headers: {Authorization: `Bearer ${accessToken}`}
   }).then(response => {
       return response.json();
@@ -32,7 +32,8 @@ const Spotify = {
     if (!jsonResponse.tracks) {
       return [];
     }
-    return jsonResponse.map(track => ({
+    //creates a list of track objects with the following properties
+    return jsonResponse.tracks.items.map(track => ({
       id: track.id,
       name: track.name,
       artist: track.artists[0].name,
@@ -42,12 +43,35 @@ const Spotify = {
     });
   },
 
-  savePlaylist(PlaylistName, trackURIs) {
-    if (!PlaylistName || !trackURIs) {
+  savePlaylist(playlistName, trackURIs) {
+    if (!playlistName || !trackURIs) {
       return;
     }
-    let accessToken
+    accessToken = Spotify.getAccessToken();
+    let headers = {'Authorization': 'Bearer ' + accessToken};
+    let userID = '';
+    return fetch('https://api.spotify.com/v1/me', {headers: headers
+      }).then(response => response.json()
+      ).then(jsonResponse => {
+        //returns user's Spotify Username
+        userID = jsonResponse.id;
+        return fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
+          headers: headers,
+          method: 'POST',
+          body: JSON.stringify({name: playlistName})
+        }).then(response => response.json()
+      ).then(jsonResponse => {
+        //creates new playlist in user's account
+        let playlistID = jsonResponse.id;
+        return fetch(`https://api.spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks`, {
+          headers: headers,
+          method: 'POST',
+          body: JSON.stringify({URIs : trackURIs})
+        });
+      })
+    });
   }
+
 };
 
 export default Spotify;
