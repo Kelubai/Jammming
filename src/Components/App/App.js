@@ -3,6 +3,7 @@ import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
+import Spotify from '../../util/Spotify';
 
 class App extends React.Component {
   constructor(props) {
@@ -45,11 +46,12 @@ class App extends React.Component {
         }
       ]
     };
-    this.addTrack.bind(this);
-    this.removeTrack.bind(this);
-    this.updatePlaylistName.bind(this);
-    this.savePlaylist.bind(this);
-    this.search.bind(this);
+
+    this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    this.savePlaylist = this.savePlaylist.bind(this);
+    this.search = this.search.bind(this);
   }
 
   //defines adding a track to playlist
@@ -77,6 +79,7 @@ class App extends React.Component {
 
   search(searchTerm) {
     console.log(searchTerm);
+    this.state.searchResults = Spotify.search();
   }
 
   render() {
